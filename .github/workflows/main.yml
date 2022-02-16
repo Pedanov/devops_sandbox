@@ -22,7 +22,7 @@ jobs:
       - name: Print log file contents
         run: cat log.txt
 
-      - name: Print
+      - name: Print Hello message
         run: echo "Hello from your ${{ env.DEPLOY_VER }} commit"
 
   Second_job:
@@ -41,4 +41,5 @@ jobs:
           echo "Day - $DAY_OF_THE_MONTH"
           echo "Month - ${{ env.MONTH }}"
           echo "Year - ${{ env.YEAR }}"
-          echo "My favorite day of week - $FAVORITE_DAY_OF_WEEK"
+          echo "My favorite day of week - ${{ secrets.FAVORITE_DAY_OF_WEEK }} - $FAVORITE_DAY_OF_WEEK"
+          echo "Secret environment variables remain undisclosed wile printing"

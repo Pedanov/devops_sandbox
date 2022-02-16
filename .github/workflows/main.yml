@@ -34,12 +34,11 @@ jobs:
     steps:
       - name: Print data
         env:
-          DAY_OF_THE_MONTH: 13
-          FAVORITE_DAY_OF_WEEK: ${{ secrets.FAVORITE_DAY_OF_WEEK }}
+          DAY_OF_THE_MONTH: 13          
         run: |
           date
           echo "Day - $DAY_OF_THE_MONTH"
           echo "Month - ${{ env.MONTH }}"
           echo "Year - ${{ env.YEAR }}"
-          echo "My favorite day of week - ${{ secrets.FAVORITE_DAY_OF_WEEK }} - $FAVORITE_DAY_OF_WEEK"
-          echo "Secret environment variables remain undisclosed wile printing"
+          echo "My favorite day of week - ${{ secrets.FAVORITE_DAY_OF_WEEK }}"
+          echo "Secret environment variables remain undisclosed"

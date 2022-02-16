@@ -1,0 +1,44 @@
+name: Task1-jobs
+env:
+  DEPLOY_VER: ${{ github.sha }}
+  YEAR: 2023
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  First_job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/Checkout@v1
+
+      - name: List contents of repository
+        run: ls -Rla
+
+      - name: Print log file contents
+        run: cat log.txt
+
+      - name: Print
+        run: echo "Hello from your ${{ env.DEPLOY_VER }} commit"
+
+  Second_job:
+    runs-on: ubuntu-latest
+    needs: First_job
+    env:
+      MONTH: February
+
+    steps:
+      - name: Print data
+        env:
+          DAY_OF_THE_MONTH: 13
+          FAVORITE_DAY_OF_WEEK: ${{ secrets.FAVORITE_DAY_OF_WEEK }}
+        run: |
+          date
+          echo "Day - $DAY_OF_THE_MONTH"
+          echo "Month - ${{ env.MONTH }}"
+          echo "Year - ${{ env.YEAR }}"
+          echo "My favorite day of week - $FAVORITE_DAY_OF_WEEK"

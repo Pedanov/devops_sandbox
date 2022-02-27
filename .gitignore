@@ -9,5 +9,5 @@
 *.tfstate.backup
 
 # exclude gitignore
-!/.gitignore
+!.gitignore
 !/.github

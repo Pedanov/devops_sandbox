@@ -1,5 +1,13 @@
-# Ignore hidden files
+# ignore hidden files
 .*
-# excluding gitignore
+
+# ignore keyfiles
+*.pem
+
+# ignore terraform state files
+*.tfstate
+*.tfstate.backup
+
+# exclude gitignore
 !/.gitignore
 !/.github

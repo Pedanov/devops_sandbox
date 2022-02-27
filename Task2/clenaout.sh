@@ -6,6 +6,7 @@ set -e
 # Check if VM1 exist
 
 # Delete VM1
+aws ec2 terminate-instances --instance-ids i-5203422c
 
 # Check if VM2 exist
 

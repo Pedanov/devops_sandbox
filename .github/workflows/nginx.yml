@@ -23,5 +23,6 @@ jobs:
         image: pedanov/my-nginx
         tags: v1, latest
         registry: docker.io
+        dockerfile: Task4/Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}

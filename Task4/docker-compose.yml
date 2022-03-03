@@ -1,0 +1,52 @@
+version: '3'
+services:
+
+  my-nginx-node-1:
+    image: pedanov/my-nginx:latest
+    ports:
+      - 81:80
+    env_file:
+      - env/node-1.env
+
+  my-nginx-node-2:
+    image: pedanov/my-nginx:latest
+    ports:
+      - 82:80
+    env_file:
+      - env/node-2.env
+
+  my-nginx-node-3:
+    image: pedanov/my-nginx:latest
+    ports:
+      - 83:80
+    env_file:
+      - env/node-3.env
+
+  my-nginx-node-4:
+    image: pedanov/my-nginx:latest
+    ports:
+      - 84:80
+    env_file:
+      - env/node-4.env
+
+  my-nginx-node-5:
+    image: pedanov/my-nginx:latest
+    ports:
+      - 85:80
+    env_file:
+      - env/node-5.env
+
+  java-app:
+    image: mmehrotra/java-helloworld
+    depends_on:
+      - "pgdb"
+
+  pgdb:
+    image: "postgres:11"
+    container_name: "pgdb"
+    env_file:
+      - env/db.env
+    ports:
+      - "54320:5432"
+    volumes:
+      - /home/opedanov/devops/db/data:/var/lib/postgresql/data

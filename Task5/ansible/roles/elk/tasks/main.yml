@@ -1,0 +1,11 @@
+- name: Clone a repo with separate git directory
+  ansible.builtin.git:
+    repo: https://github.com/deviantony/docker-elk.git
+    dest: /src/elk
+    separate_git_dir: /src/ansible-examples.git
+
+- name: Run ELK
+  shell:
+    cmd: "docker-compose -f docker-compose.yml up -d"
+    chdir: /src/elk
+    

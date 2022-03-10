@@ -1,0 +1,9 @@
+---
+- hosts: aws_ec2
+  user: ubuntu
+  become: yes
+  vars_files:
+    - vars.yml
+  roles:
+  - { role: docker }
+  - { role: wordpress }

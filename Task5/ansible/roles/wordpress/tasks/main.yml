@@ -1,0 +1,28 @@
+- name: Deploy MariaDB server
+  docker_container:
+    image: mariadb
+    name: mariadb
+    volumes:
+      - "{{db_volume}}:/var/lib/mysql"
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
+      MYSQL_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
+      MYSQL_DATABASE: "{{ lookup('env', 'MYSQL_DATABASE') }}"
+      MYSQL_USER: "{{ lookup('env', 'MYSQL_USER') }}"
+
+- name: Deploy WordPress
+  docker_container:
+    image: wordpress
+    name: wordpress
+    restart_policy: always
+    ports:
+      - "80:80"
+    links:
+      - "{{db_volume}}:/var/lib/mysql"
+    volumes:
+      - "{{wordpress}}:/var/www/html"
+    env:      
+      WORDPRESS_DB_PASSWORD: "{{ lookup('env', 'MYSQL_PASSWORD') }}"
+      WORDPRESS_DB_NAME: "{{ lookup('env', 'MYSQL_DATABASE') }}"
+      WORDPRESS_DB_USER: "{{ lookup('env', 'MYSQL_USER') }}"
+      WORDPRESS_DB_HOST: mariadb

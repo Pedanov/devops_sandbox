@@ -5,7 +5,8 @@ pipeline{
         dockerImage = ''
     }
     agent{
-        label "CentOS-Agent1"
+        // label "CentOS-Agent1"
+        label "any"
     }
     stages{
         stage("Check Docker access"){

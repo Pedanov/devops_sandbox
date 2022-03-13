@@ -1,0 +1,7 @@
+---
+- hosts: agents
+  user: opedanov
+  become: yes
+  roles:
+  - { role: docker }
+  - { role: jenkins-agent }

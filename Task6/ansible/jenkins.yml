@@ -1,0 +1,7 @@
+---
+- hosts: jenkins
+  user: opedanov
+  become: yes
+  roles:
+  - { role: docker }
+  - { role: jenkins }

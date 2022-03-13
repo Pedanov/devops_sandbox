@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  agent:
+    image: node:lts
+    volumes:
+      - /share/jenkins-agent:/home/jenkins/agent
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+volumes:
+  myapp:

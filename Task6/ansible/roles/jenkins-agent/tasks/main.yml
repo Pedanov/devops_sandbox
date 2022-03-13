@@ -1,0 +1,21 @@
+- name: Ensure jenkins directory on docker host
+  file:
+    state: directory
+    owner: 1000
+    group: 1000
+    path: "/share/jenkins_agent"
+
+- name: Pull the latest official jenkins agent docker image
+  docker_image:
+    source: pull
+    name: "jenkins/agent"
+
+- name: Create a container from the jenkins agent docker image
+  docker_container:
+    name: "jenkins-agent"
+    image: "jenkins/agent"    
+    volumes:
+      - "/share/jenkins_agent:/home/jenkins/agent"
+    command: "java -jar /usr/share/jenkins/agent.jar -workDir /home/jenkins/agent"
+    state: present
+    recreate: no

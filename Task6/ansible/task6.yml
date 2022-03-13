@@ -1,0 +1,9 @@
+all:
+  children:
+    jenkins:
+      hosts:
+        jenkins.pedanov.com:          
+    agents:
+      hosts:
+        agent1.pedanov.com:
+        agent2.pedanov.com:

@@ -6,7 +6,7 @@ pipeline{
         stage("A"){
             steps{
                 // echo "Current date: ${(date)}"
-                docker ps -a
+                sh "docker ps -a"
                 // echo "here it is"
             }
             post{

@@ -30,7 +30,8 @@ pipeline{
                 git 'https://github.com/YourGithubAccount/YourGithubRepository.git'
             }
         }
-        stage('Building our image') {
+
+        stage("Build image") {
             steps{
                 dir('./Task4/'){
                 script {
@@ -39,7 +40,7 @@ pipeline{
             }
         }
 
-        stage('Deploy image') {
+        stage("Deploy image") {
             steps{
                 script {
                     docker.withRegistry( '', registryCredential ) {
@@ -49,11 +50,11 @@ pipeline{
             }
         }
 
-        stage('Clean up') {
-            steps{
-                sh "docker rmi $registry:$BUILD_NUMBER"
-            }
-        }
+        // stage("Clean up") {
+        //     steps{
+        //         sh "docker rmi $registry:$BUILD_NUMBER"
+        //     }
+        // }
     }
 
     post{

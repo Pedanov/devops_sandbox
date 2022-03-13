@@ -1,13 +1,16 @@
 pipeline{
+    environment {
+        registry = "pedanov/task6"
+        registryCredential = 'dockerhub_id'
+        dockerImage = ''
+    }
     agent{
         label "CentOS-Agent1"
     }
     stages{
-        stage("A"){
-            steps{
-                // echo "Current date: ${(date)}"
-                sh "docker ps -a"
-                // echo "here it is"
+        stage("Check Docker access"){
+            steps{                
+                sh "docker ps -a"                
             }
             post{
                 always{
@@ -21,7 +24,38 @@ pipeline{
                 }
             }
         }
+        
+        stage("Clone git repo"){
+            steps {
+                git 'https://github.com/YourGithubAccount/YourGithubRepository.git'
+            }
+        }
+        stage('Building our image') {
+            steps{
+                dir('./Task4/'){
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+
+        stage('Deploy image') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+
+        stage('Clean up') {
+            steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
     }
+
     post{
         always{
             echo "========always========"
@@ -33,4 +67,5 @@ pipeline{
             echo "========pipeline execution failed========"
         }
     }
+}
 }

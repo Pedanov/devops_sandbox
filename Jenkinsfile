@@ -27,15 +27,16 @@ pipeline{
         
         stage("Clone git repo"){
             steps {
-                git 'https://github.com/YourGithubAccount/YourGithubRepository.git'
+                git 'https://github.com/Pedanov/devops_sandbox.git'
             }
         }
 
         stage("Build image") {
             steps{
                 dir('./Task4/'){
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    script {
+                        dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    }
                 }
             }
         }
@@ -68,5 +69,4 @@ pipeline{
             echo "========pipeline execution failed========"
         }
     }
-}
 }

@@ -5,12 +5,12 @@ pipeline{
         dockerImage = ''
     }
 
-    agent{
-        node{
-            // label "CentOS-Agent1"
-            label "Built-In Node"
-        }
-    }
+    agent any
+    // {
+    //     node{
+    //         label "CentOS-Agent1"
+    //     }
+    // }
 
     stages{
         stage("Check Docker access"){

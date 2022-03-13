@@ -1,11 +1,11 @@
 pipeline{
     agent{
-        label "node" // Change to internal docker agent
+        label "CentOS-Agent1" // Change to internal docker agent
     }
     stages{
         stage("A"){
             steps{
-                echo "Current date: $(date)"
+                echo "Current date: ${(date)}"
                 docker ps -a
             }
             post{

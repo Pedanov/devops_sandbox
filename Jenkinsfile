@@ -32,7 +32,8 @@ pipeline{
         
         stage("Clone git repo"){
             steps {
-                git 'https://github.com/Pedanov/devops_sandbox.git'
+                checkout scm
+                // git 'https://github.com/Pedanov/devops_sandbox.git'
             }
             post{
                 always{

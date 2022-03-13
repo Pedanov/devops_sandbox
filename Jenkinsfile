@@ -29,6 +29,17 @@ pipeline{
             steps {
                 git 'https://github.com/Pedanov/devops_sandbox.git'
             }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
         }
 
         stage("Build image") {
@@ -39,6 +50,17 @@ pipeline{
                     }
                 }
             }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
         }
 
         stage("Deploy image") {
@@ -47,6 +69,17 @@ pipeline{
                     docker.withRegistry( '', registryCredential ) {
                         dockerImage.push()
                     }
+                }
+            }
+            post{
+                always{
+                    echo "========always========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
                 }
             }
         }

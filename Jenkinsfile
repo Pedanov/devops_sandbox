@@ -4,10 +4,9 @@ pipeline{
         registryCredential = 'dockerhub_id'
         dockerImage = ''
     }
-    agent{
-        // label "CentOS-Agent1"
-        label "any"
-    }
+    // agent{
+    //     label "CentOS-Agent1"    
+    // }
     stages{
         stage("Check Docker access"){
             steps{                

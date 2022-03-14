@@ -32,8 +32,7 @@ pipeline{
         
         stage("Clone git repo"){
             steps {
-                checkout scm
-                // git 'https://github.com/Pedanov/devops_sandbox.git'
+                checkout scm                
             }
             post{
                 always{
@@ -48,27 +47,30 @@ pipeline{
             }
         }
 
-        stage("Prepare secret password"){
-            steps {
-                script {
-                    withCredentials([
-                        string(
-                            credentialsId: 'encrypted_password',
-                            variable: 'PASSWORD',
-                        )
-                    ]) {
-                        password = $PASSWORD
-                    }
-                }
-            }
-        }
+        // stage("Prepare secret password"){
+        //     steps {
+        //         script {
+        //             withCredentials([
+        //                 string(
+        //                     credentialsId: 'encrypted_password',
+        //                     variable: 'PASSWORD',
+        //                 )
+        //             ]) {
+        //                 password = $PASSWORD
+        //             }
+        //         }
+        //     }
+        // }
 
         stage("Build image") {            
+            environment{
+                encryptedPassword = credentials('encrypted_password')
+            }
             steps{
                 dir('./Task4/'){
-                    echo "Encrypted password is '${password}'"
+                    echo "Encrypted password is '$encryptedPassword'"
                     script {
-                        dockerImage = docker.build(registry + ":$BUILD_NUMBER", "--build-arg PASSWORD=${password}", ".")
+                        dockerImage = docker.build(registry + ":$BUILD_NUMBER", "--build-arg PASSWORD=$encryptedPassword", ".")
                     }
                 }
             }

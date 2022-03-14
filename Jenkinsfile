@@ -35,7 +35,7 @@ pipeline{
         
         stage("Clone git repo"){
             agent { 
-                label 'remote-centos'
+                label 'local-docker'
             }
             steps {
                 checkout scm                
@@ -70,7 +70,7 @@ pipeline{
 
         stage("Build image") {
             agent { 
-                label 'remote-centos'
+                label 'local-docker'
             }
             environment{
                 encryptedPassword = credentials('encrypted_password')
@@ -98,7 +98,7 @@ pipeline{
 
         stage("Deploy image") {
             agent { 
-                label 'remote-centos'
+                label 'local-docker'
             }
             steps{
                 script {
@@ -122,7 +122,7 @@ pipeline{
 
         stage("Clean up") {
             agent { 
-                label 'remote-centos'
+                label 'local-docker'
             }
             steps{
                 sh "docker rmi $registry:$BUILD_NUMBER"

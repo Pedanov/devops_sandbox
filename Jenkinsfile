@@ -13,7 +13,10 @@ pipeline{
     // }
 
     stages{
-        stage("Check Docker access"){
+        stage("Check Docker access in docker agent on the main node"){
+            agent { 
+                label 'local-docker'
+            }
             steps{                
                 sh "docker ps -a"                
             }
@@ -31,6 +34,9 @@ pipeline{
         }
         
         stage("Clone git repo"){
+            agent { 
+                label 'remote-centos'
+            }
             steps {
                 checkout scm                
             }
@@ -62,7 +68,10 @@ pipeline{
         //     }
         // }
 
-        stage("Build image") {            
+        stage("Build image") {
+            agent { 
+                label 'remote-centos'
+            }
             environment{
                 encryptedPassword = credentials('encrypted_password')
             }
@@ -88,6 +97,9 @@ pipeline{
         }
 
         stage("Deploy image") {
+            agent { 
+                label 'remote-centos'
+            }
             steps{
                 script {
                     docker.withRegistry( '', registryCredential ) {
@@ -108,11 +120,14 @@ pipeline{
             }
         }
 
-        // stage("Clean up") {
-        //     steps{
-        //         sh "docker rmi $registry:$BUILD_NUMBER"
-        //     }
-        // }
+        stage("Clean up") {
+            agent { 
+                label 'remote-centos'
+            }
+            steps{
+                sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
     }
 
     post{

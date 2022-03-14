@@ -118,12 +118,14 @@ pipeline{
             agent { 
                 label 'remote-centos'
             }
-            environment{                
+            environment{
+                CONTAINER="task6"
                 PORT=80
             }
-            steps {                
+            steps {
+                sh "docker stop ${CONTAINER} || true && docker rm ${CONTAINER} || true"
                 sh "docker run -d \
-                    --name ${registry} \
+                    --name ${CONTAINER} \
                     --publish ${PORT}:80 \
                     ${registry}:${BUILD_ID}"
             }

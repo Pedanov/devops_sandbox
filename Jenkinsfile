@@ -2,9 +2,9 @@ pipeline{
     environment {
         registry = "pedanov/task6"
         registryCredential = 'dockerhub_id'
-        dockerImage = ''
+        dockerImage = ''        
     }
-
+    
     agent any
     // {
     //     node{
@@ -51,9 +51,13 @@ pipeline{
         stage("Build image") {
             steps{
                 dir('./Task4/'){
-                    script {
-                        dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    withCredentials([string(credentialsId: 'encrypted-password', variable: 'PASSWORD')]) {
+                        echo "Encrypted password is '${PASSWORD}'"
+                        script {
+                            dockerImage = docker.build(registry + ":$BUILD_NUMBER", "--build-arg PASSWORD=${PASSWORD}")                                      
+                        }
                     }
+                    
                 }
             }
             post{

@@ -1,6 +1,9 @@
 FROM alpine:latest
 
+ARG PASSWORD
+
 ENV DEVOPS=opedanov
+ENV PASSWORD=$PASSWORD
 
 ADD nginx-install.sh /tmp
 RUN apk update && apk add nginx --no-cache
@@ -14,4 +17,3 @@ ADD entrypoint.sh ./
 RUN chmod +x ./entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
-# CMD ["nginx", "-g", "daemon off;"]

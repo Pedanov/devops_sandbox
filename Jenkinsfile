@@ -70,7 +70,7 @@ pipeline{
                 dir('./Task4/'){
                     echo "Encrypted password is '$encryptedPassword'"
                     script {
-                        dockerImage = docker.build(registry + ":$BUILD_NUMBER", "--build-arg PASSWORD=QWERTY!", ".")
+                        dockerImage = docker.build(registry + ":$BUILD_NUMBER", "--build-arg PASSWORD=$encryptedPassword .")
                     }
                 }
             }

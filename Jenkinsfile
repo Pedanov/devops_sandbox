@@ -121,8 +121,7 @@ pipeline{
             environment{                
                 PORT=80
             }
-            steps {
-                sh "docker stop ${registry} || true && docker rm ${registry} || true"
+            steps {                
                 sh "docker run -d \
                     --name ${registry} \
                     --publish ${PORT}:80 \

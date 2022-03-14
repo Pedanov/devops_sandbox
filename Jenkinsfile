@@ -51,7 +51,7 @@ pipeline{
         stage("Build image") {
             steps{
                 dir('./Task4/'){
-                    withCredentials([string(credentialsId: 'encrypted-password', variable: 'PASSWORD')]) {
+                    withCredentials([string(credentialsId: 'encrypted_password', variable: 'PASSWORD')]) {
                         echo "Encrypted password is '${PASSWORD}'"
                         script {
                             dockerImage = docker.build(registry + ":$BUILD_NUMBER", "--build-arg PASSWORD=${PASSWORD}")                                      

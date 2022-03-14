@@ -53,21 +53,6 @@ pipeline{
             }
         }
 
-        // stage("Prepare secret password"){
-        //     steps {
-        //         script {
-        //             withCredentials([
-        //                 string(
-        //                     credentialsId: 'encrypted_password',
-        //                     variable: 'PASSWORD',
-        //                 )
-        //             ]) {
-        //                 password = $PASSWORD
-        //             }
-        //         }
-        //     }
-        // }
-
         stage("Build image") {
             agent { 
                 label 'local-docker'
@@ -96,7 +81,7 @@ pipeline{
             }
         }
 
-        stage("Deploy image") {
+        stage("Push image to docker registry") {
             agent { 
                 label 'local-docker'
             }
@@ -126,6 +111,22 @@ pipeline{
             }
             steps{
                 sh "docker rmi $registry:$BUILD_NUMBER"
+            }
+        }
+
+        stage("Deploy image on CentOS VM") {
+            agent { 
+                label 'remote-centos'
+            }
+            environment{                
+                PORT=80
+            }
+            steps {
+                sh "docker stop ${registry} || true && docker rm ${registry} || true"
+                sh "docker run -d \
+                    --name ${registry} \
+                    --publish ${PORT}:80 \
+                    ${registry}:${BUILD_ID}"
             }
         }
     }

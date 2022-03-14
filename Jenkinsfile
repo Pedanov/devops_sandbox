@@ -54,7 +54,7 @@ pipeline{
                     withCredentials([string(credentialsId: 'encrypted_password', variable: 'PASSWORD')]) {
                         echo "Encrypted password is '${PASSWORD}'"
                         script {
-                            dockerImage = docker.build(registry + ":$BUILD_NUMBER", "--build-arg PASSWORD=${PASSWORD}")                                      
+                            dockerImage = docker.build(registry + ":$BUILD_NUMBER", "--build-arg PASSWORD=${PASSWORD}", ".")
                         }
                     }
                     

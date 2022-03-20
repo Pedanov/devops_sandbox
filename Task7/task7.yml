@@ -1,0 +1,9 @@
+all:
+  children:
+    elk:
+      hosts:
+        elk.pedanov.com:
+    services:
+      hosts:
+        services.pedanov.com:
+        jenkins.pedanov.com:
